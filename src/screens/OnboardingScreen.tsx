@@ -1,6 +1,7 @@
 import React from 'react'
 import AppIntroSlider from 'react-native-app-intro-slider'
 import { Image, StyleSheet, Text, View } from 'react-native'
+import { StackScreenProps } from '@react-navigation/stack'
 
 const data = [
     {
@@ -16,7 +17,7 @@ const data = [
         bg: '#057f8e'
     },
     {
-        title: 'Share some feedback',
+        title: 'Enjoy!',
         text: 'this a studying-purpose project.\n feel free to test it and give some feedback.',
         image: require('../assets/onboard-bkg-yellow.png'),
         bg: '#febe29'
@@ -25,11 +26,14 @@ const data = [
 
 type Item = typeof data[0]
 
-interface Props {
-    onDone: () => void
+type AuthStackParamList = {
+    loginScreen: undefined
+    onboardingScreen: undefined
 }
 
-const OnboardingScreen: React.FC<Props> = ({ onDone }) => {
+const OnboardingScreen = ({
+    navigation
+}: StackScreenProps<AuthStackParamList>) => {
     const keyExtractor = (item: Item) => item.title
 
     const renderItem = ({ item }: { item: Item }) => {
@@ -38,7 +42,8 @@ const OnboardingScreen: React.FC<Props> = ({ onDone }) => {
                 style={[
                     styles.slide,
                     {
-                        backgroundColor: item.bg
+                        backgroundColor: item.bg,
+                        flex: 1
                     }
                 ]}
             >
@@ -54,8 +59,8 @@ const OnboardingScreen: React.FC<Props> = ({ onDone }) => {
             keyExtractor={keyExtractor}
             renderItem={renderItem}
             data={data}
-            onDone={onDone}
-            onSkip={onDone}
+            onDone={() => navigation.navigate('loginScreen')}
+            onSkip={() => navigation.navigate('loginScreen')}
             showSkipButton={true}
         />
     )
