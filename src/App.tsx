@@ -26,6 +26,7 @@ import {
     LearnMoreLinks,
     ReloadInstructions
 } from 'react-native/Libraries/NewAppScreen'
+import OnboardingScreen from './screens/OnboardingScreen'
 
 const Section: React.FC<{
     title: string
@@ -58,13 +59,20 @@ const Section: React.FC<{
 }
 
 const App = () => {
+    const [onboard, setOnboard] = React.useState<boolean>(true)
+
     const isDarkMode = useColorScheme() === 'dark'
 
     const backgroundStyle = {
-        backgroundColor: isDarkMode ? Colors.darker : Colors.lighter
+        backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+        flex: 1
     }
 
-    return (
+    const onDone = () => setOnboard(false)
+
+    return onboard ? (
+        <OnboardingScreen onDone={onDone} />
+    ) : (
         <SafeAreaView style={backgroundStyle}>
             <StatusBar
                 barStyle={isDarkMode ? 'light-content' : 'dark-content'}

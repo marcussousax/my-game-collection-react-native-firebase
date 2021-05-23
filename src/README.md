@@ -13,3 +13,6 @@ A "bare" React Native CRUD using Typescript and Firebase. This project was boots
 This a studying-purpose project, feel free to test it and give some feedback.
 
 Enjoy! 🤖
+
+#### Assets
+Images from https://www.freepik.com/vectors/background - Background vector created by starline - www.freepik.com
