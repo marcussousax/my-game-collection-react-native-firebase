@@ -9,10 +9,10 @@
  */
 
 import React from 'react'
-import Providers from './navigation'
+import Navigation from './navigation'
 
 const App: React.FC = () => {
-    return <Providers />
+    return <Navigation />
 }
 
 export default App

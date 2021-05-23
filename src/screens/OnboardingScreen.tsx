@@ -27,8 +27,8 @@ const data = [
 type Item = typeof data[0]
 
 type AuthStackParamList = {
-    loginScreen: undefined
-    onboardingScreen: undefined
+    LoginScreen: undefined
+    OnboardingScreen: undefined
 }
 
 const OnboardingScreen = ({
@@ -59,8 +59,8 @@ const OnboardingScreen = ({
             keyExtractor={keyExtractor}
             renderItem={renderItem}
             data={data}
-            onDone={() => navigation.navigate('loginScreen')}
-            onSkip={() => navigation.navigate('loginScreen')}
+            onDone={() => navigation.navigate('LoginScreen')}
+            onSkip={() => navigation.navigate('LoginScreen')}
             showSkipButton={true}
         />
     )

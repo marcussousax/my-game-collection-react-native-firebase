@@ -1,13 +1,30 @@
 import React from 'react'
-import { AuthProvider } from './AuthProvider'
-import Routes from './Routes'
+import { NavigationContainer } from '@react-navigation/native'
+import { AuthProvider } from '../contexts/auth'
+import AuthStack from './AuthStack'
 
-const Providers = () => {
+const LinkingConfiguration = {
+    prefixes: ['/'],
+    config: {
+        screens: {
+            LoginScreen: 'LoginScreen',
+            OnboardingScreen: 'OnboardingScreen'
+        }
+    }
+}
+
+const Navigation = () => {
     return (
-        <AuthProvider>
-            <Routes />
-        </AuthProvider>
+        <NavigationContainer linking={LinkingConfiguration}>
+            <AuthProvider>
+                <Routes />
+            </AuthProvider>
+        </NavigationContainer>
     )
 }
 
-export default Providers
+const Routes: React.FC = () => {
+    return <AuthStack />
+}
+
+export default Navigation

@@ -3,9 +3,10 @@ import { ActivityIndicator, Text, View } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+import { AuthStackParamList } from './types'
 import OnboardingScreen from '../screens/OnboardingScreen'
 
-const Stack = createStackNavigator()
+const Stack = createStackNavigator<AuthStackParamList>()
 
 const AuthStack = () => {
     const [isFirstLaunch, setIsFirstLaunch] = useState<boolean | null>(null)
@@ -43,20 +44,20 @@ const AuthStack = () => {
             </View>
         )
     } else if (isFirstLaunch) {
-        routeName = 'onboardingScreen'
+        routeName = 'OnboardingScreen'
     } else {
-        routeName = 'loginScreen'
+        routeName = 'LoginScreen'
     }
 
     return (
         <Stack.Navigator initialRouteName={routeName}>
             <Stack.Screen
-                name="onboardingScreen"
+                name="OnboardingScreen"
                 component={OnboardingScreen}
                 options={{ header: () => null }}
             />
             <Stack.Screen
-                name="loginScreen"
+                name="LoginScreen"
                 component={LoginScreen}
                 options={{ header: () => null }}
             />
