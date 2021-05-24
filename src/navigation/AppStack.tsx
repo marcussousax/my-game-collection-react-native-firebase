@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import { AppStackParamList } from './types'
+import { AppStackParamList } from '../types'
 import ProfileScreen from '../screens/ProfileScreen'
 
 const Stack = createStackNavigator<AppStackParamList>()

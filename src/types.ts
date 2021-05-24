@@ -11,3 +11,10 @@ export type AuthStackParamList = {
 export type AppStackParamList = {
     ProfileScreen: undefined
 }
+
+export type GameProps = {
+    id: string
+    name: string
+    system: string
+    status: string
+}
