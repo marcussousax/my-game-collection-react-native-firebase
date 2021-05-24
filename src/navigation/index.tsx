@@ -1,7 +1,6 @@
 import React from 'react'
 import { ActivityIndicator, View } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { AuthContext, AuthProvider } from '../contexts/auth'
 import AuthStack from './AuthStack'
 import AppStack from './AppStack'
@@ -27,24 +26,7 @@ const Navigation = () => {
 }
 
 const Routes: React.FC = () => {
-    const { user, setUser } = React.useContext(AuthContext)
-
-    const [initializing, setInitializing] = React.useState(true)
-
-    const onAuthStateChanged = (
-        googleUser: React.SetStateAction<FirebaseAuthTypes.User | null>
-    ) => {
-        setUser(googleUser)
-        if (initializing) {
-            setInitializing(false)
-        }
-    }
-
-    React.useEffect(() => {
-        const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
-
-        return subscriber
-    }, [])
+    const { user, initializing } = React.useContext(AuthContext)
 
     if (initializing) {
         return (

@@ -4,7 +4,7 @@ import { View } from 'react-native'
 import { AuthContext } from '../contexts/auth'
 
 const LoginScreen: React.FC = () => {
-    const { signInGoogle } = React.useContext(AuthContext)
+    const { signIn } = React.useContext(AuthContext)
 
     return (
         <View>
@@ -12,7 +12,7 @@ const LoginScreen: React.FC = () => {
                 style={{ width: 192, height: 48 }}
                 size={GoogleSigninButton.Size.Wide}
                 color={GoogleSigninButton.Color.Dark}
-                onPress={() => signInGoogle()}
+                onPress={() => signIn()}
             />
         </View>
     )
