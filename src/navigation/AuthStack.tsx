@@ -57,7 +57,9 @@ const AuthStack = () => {
     }
 
     return (
-        <Stack.Navigator initialRouteName={routeName}>
+        <Stack.Navigator
+            initialRouteName={routeName as keyof AuthStackParamList | undefined}
+        >
             <Stack.Screen
                 name="OnboardingScreen"
                 component={OnboardingScreen}
