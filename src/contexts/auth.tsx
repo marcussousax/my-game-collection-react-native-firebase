@@ -1,20 +1,49 @@
-import React, { useState } from 'react'
+import React from 'react'
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
+import { GoogleSignin } from '@react-native-google-signin/google-signin'
 
 interface AuthContextData {
-    user: {} | null
-    setUser: React.Dispatch<React.SetStateAction<null>>
+    user: FirebaseAuthTypes.User | null
+    setUser: React.Dispatch<React.SetStateAction<FirebaseAuthTypes.User | null>>
+    signInGoogle: any
 }
 
-const AuthContext = React.createContext<AuthContextData>({} as AuthContextData)
+export const AuthContext = React.createContext<AuthContextData>(
+    {} as AuthContextData
+)
 
 export const AuthProvider: React.FC = ({ children }) => {
-    const [user, setUser] = useState(null)
+    const [user, setUser] = React.useState<FirebaseAuthTypes.User | null>(null)
+    // const [user, setUser] = React.useState<React.SetStateAction<null>>(null)
 
     return (
         <AuthContext.Provider
             value={{
                 user,
-                setUser
+                setUser,
+                signInGoogle: async () => {
+                    try {
+                        // Get the users ID token
+                        const { idToken } = await GoogleSignin.signIn()
+
+                        // Create a Google credential with the token
+                        const googleCredential =
+                            auth.GoogleAuthProvider.credential(idToken)
+
+                        // Sign-in the user with the credential
+                        await auth()
+                            .signInWithCredential(googleCredential)
+                            .then(res => console.log(res))
+                            .catch(error => {
+                                console.log(
+                                    'Something went wrong with sign up: ',
+                                    error
+                                )
+                            })
+                    } catch (error) {
+                        console.log({ error })
+                    }
+                }
             }}
         >
             {children}

@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
-import { ActivityIndicator, Text, View } from 'react-native'
+import { ActivityIndicator, View } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
+import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
 import { AuthStackParamList } from './types'
 import OnboardingScreen from '../screens/OnboardingScreen'
+import LoginScreen from '../screens/LoginScreen'
+import getEnvVars from '../env'
 
 const Stack = createStackNavigator<AuthStackParamList>()
 
@@ -12,8 +14,13 @@ const AuthStack = () => {
     const [isFirstLaunch, setIsFirstLaunch] = useState<boolean | null>(null)
 
     let routeName
-
+    const { clientId } = getEnvVars()
     React.useEffect(() => {
+        GoogleSignin.configure({
+            webClientId: clientId,
+            offlineAccess: true
+        })
+
         try {
             AsyncStorage.getItem('@RNAlreadyStarted').then(value => {
                 if (!value) {
@@ -29,7 +36,7 @@ const AuthStack = () => {
         } catch (err) {
             console.log(err)
         }
-    }, [])
+    }, [clientId])
 
     if (isFirstLaunch === null) {
         return (
@@ -62,14 +69,6 @@ const AuthStack = () => {
                 options={{ header: () => null }}
             />
         </Stack.Navigator>
-    )
-}
-
-const LoginScreen = () => {
-    return (
-        <View style={{ flex: 1 }}>
-            <Text>Login Screen</Text>
-        </View>
     )
 }
 

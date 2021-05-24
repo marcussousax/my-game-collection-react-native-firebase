@@ -7,3 +7,7 @@ export type AuthStackParamList = {
     LoginScreen: undefined
     OnboardingScreen: undefined
 }
+
+export type AppStackParamList = {
+    ProfileScreen: undefined
+}
