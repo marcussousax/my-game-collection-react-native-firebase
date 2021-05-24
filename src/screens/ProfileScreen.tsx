@@ -2,9 +2,10 @@ import React from 'react'
 import { Button, Text, TouchableOpacity, View } from 'react-native'
 import { AuthContext } from '../contexts/auth'
 import { getDocRef } from '../services/api'
-import { GameProps } from '../types'
+import { AppStackParamList, GameProps } from '../types'
+import { StackScreenProps } from '@react-navigation/stack'
 
-const ProfileScreen: React.FC = () => {
+const ProfileScreen = ({ navigation }: StackScreenProps<AppStackParamList>) => {
     const { user, signOut } = React.useContext(AuthContext)
     const [listGames, setListGames] = React.useState<GameProps[]>([])
     const [loading, setLoading] = React.useState<boolean>(true)
@@ -46,6 +47,10 @@ const ProfileScreen: React.FC = () => {
                 ))
             )}
 
+            <Button
+                title={'Add Game'}
+                onPress={() => navigation.navigate('AddGameScreen')}
+            />
             <Button title={'Logout'} onPress={() => signOut()} />
         </View>
     )
