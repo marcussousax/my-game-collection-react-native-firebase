@@ -7,20 +7,21 @@ const data = [
     {
         title: 'Welcome',
         text: 'to my React Native app\n',
-        image: require('../assets/onboard-bkg-red.png'),
-        bg: '#ee6807'
+        image: require('../assets/bg-onboarding-welcome.png'),
+        bg: '#fff',
+        color: '#000'
     },
     {
         title: 'Share some Feedbacks',
         text: 'a "bare" React Native CRUD\n using Typescript and Firebase.',
-        image: require('../assets/onboard-bkg-green.png'),
-        bg: '#057f8e'
+        image: require('../assets/bg-onboarding-step2.png'),
+        bg: '#fff'
     },
     {
         title: 'Enjoy!',
         text: 'this a studying-purpose project.\n feel free to test it and give some feedback.',
-        image: require('../assets/onboard-bkg-yellow.png'),
-        bg: '#febe29'
+        image: require('../assets/bg-onboarding-enjoy.png'),
+        bg: '#fff'
     }
 ]
 
@@ -62,6 +63,41 @@ const OnboardingScreen = ({
             onDone={() => navigation.navigate('LoginScreen')}
             onSkip={() => navigation.navigate('LoginScreen')}
             showSkipButton={true}
+            dotStyle={{ backgroundColor: '#C4C4C4' }}
+            activeDotStyle={{ backgroundColor: '#43DFA8' }}
+            renderDoneButton={() => (
+                <Text
+                    style={{
+                        fontWeight: '600',
+                        marginVertical: 12,
+                        color: '#C4C4C4'
+                    }}
+                >
+                    done
+                </Text>
+            )}
+            renderNextButton={() => (
+                <Text
+                    style={{
+                        fontWeight: '600',
+                        marginVertical: 12,
+                        color: '#C4C4C4'
+                    }}
+                >
+                    next
+                </Text>
+            )}
+            renderSkipButton={() => (
+                <Text
+                    style={{
+                        fontWeight: '600',
+                        marginVertical: 12,
+                        color: '#C4C4C4'
+                    }}
+                >
+                    skip
+                </Text>
+            )}
         />
     )
 }
@@ -82,13 +118,14 @@ const styles = StyleSheet.create({
         borderRadius: 32
     },
     text: {
-        color: '#fff',
+        color: '#000',
         textAlign: 'center',
         fontSize: 19
     },
     title: {
-        fontSize: 22,
-        color: 'white',
+        fontSize: 21,
+        color: '#43DFA8',
+        fontWeight: 'bold',
         textAlign: 'center'
     }
 })
