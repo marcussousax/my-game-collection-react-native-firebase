@@ -1,6 +1,6 @@
 import React from 'react'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
-import { GoogleSignin } from '@react-native-google-signin/google-signin'
+import { useUserStore } from './userStore'
 
 interface AuthContextData {
     user: FirebaseAuthTypes.User | null
@@ -14,39 +14,14 @@ export const AuthContext = React.createContext<AuthContextData>(
 )
 
 export const AuthProvider: React.FC = ({ children }) => {
-    const [user, setUser] = React.useState<FirebaseAuthTypes.User | null>(null)
-
-    const [initializing, setInitializing] = React.useState(true)
-
-    const signInGoogle = async () => {
-        try {
-            // Get the users ID token
-            const { idToken } = await GoogleSignin.signIn()
-
-            // Create a Google credential with the token
-            const googleCredential = auth.GoogleAuthProvider.credential(idToken)
-
-            // Sign-in the user with the credential
-            await auth()
-                .signInWithCredential(googleCredential)
-                .then(res => console.log(res))
-                .catch(error => {
-                    console.log('Something went wrong with sign up: ', error)
-                })
-        } catch (error) {
-            console.log({ error })
-        }
-    }
-
-    const signOutGoogle = async () => {
-        auth()
-            .signOut()
-            .then(() => {
-                setUser(null)
-                console.log('User signed out!')
-            })
-            .catch(err => console.log(err))
-    }
+    const {
+        user,
+        setUser,
+        signInGoogle,
+        signOutGoogle,
+        initializing,
+        setInitializing
+    } = useUserStore()
 
     const onAuthStateChanged = React.useCallback(
         (googleUser: React.SetStateAction<FirebaseAuthTypes.User | null>) => {
@@ -55,7 +30,7 @@ export const AuthProvider: React.FC = ({ children }) => {
                 setInitializing(false)
             }
         },
-        [initializing]
+        [initializing, setInitializing, user, setUser]
     )
 
     React.useEffect(() => {
