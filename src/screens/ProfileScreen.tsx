@@ -1,14 +1,18 @@
 import React from 'react'
 import { Button, Text, TouchableOpacity, View } from 'react-native'
+import { StackScreenProps } from '@react-navigation/stack'
+import Icon from 'react-native-vector-icons/FontAwesome'
+
 import { AuthContext } from '../contexts/auth'
 import { getDocRef } from '../services/api'
 import { AppStackParamList, GameProps } from '../types'
-import { StackScreenProps } from '@react-navigation/stack'
 
 const ProfileScreen = ({ navigation }: StackScreenProps<AppStackParamList>) => {
     const { user, signOut } = React.useContext(AuthContext)
     const [listGames, setListGames] = React.useState<GameProps[]>([])
     const [loading, setLoading] = React.useState<boolean>(true)
+
+    const myIcon = <Icon name="rocket" size={30} color="#900" />
 
     React.useEffect(() => {
         getDocRef('games').onSnapshot(QuerySnapshot => {
@@ -33,7 +37,9 @@ const ProfileScreen = ({ navigation }: StackScreenProps<AppStackParamList>) => {
     return (
         <View>
             <Text>{user?.displayName}</Text>
-            <Text>{user?.email}</Text>
+            <Text>
+                {user?.email} {myIcon}
+            </Text>
 
             {loading ? (
                 <Text>loading games</Text>
