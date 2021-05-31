@@ -10,6 +10,7 @@ export type AuthStackParamList = {
 
 export type AppStackParamList = {
     ProfileScreen: undefined
+    ListGameScreen: undefined
     AddGameScreen: undefined
 }
 

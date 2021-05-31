@@ -66,7 +66,7 @@ const AddGameScreen = ({ navigation }: StackScreenProps<AppStackParamList>) => {
             .then(() => {
                 setGameDocument(gameDocumentInitialState)
                 setSending(false)
-                navigation.navigate('ProfileScreen')
+                navigation.navigate('ListGameScreen', { message: 'Created' })
             })
             .catch(error => console.log(error))
     }

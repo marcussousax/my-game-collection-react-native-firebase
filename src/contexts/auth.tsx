@@ -29,7 +29,7 @@ export const AuthProvider: React.FC = ({ children }) => {
             // Sign-in the user with the credential
             await auth()
                 .signInWithCredential(googleCredential)
-                .then(res => console.log(res))
+                .then(res => console.log(JSON.stringify(res, null, 4)))
                 .catch(error => {
                     console.log('Something went wrong with sign up: ', error)
                 })

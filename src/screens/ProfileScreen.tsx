@@ -1,64 +1,36 @@
 import React from 'react'
-import { Button, Text, TouchableOpacity, View } from 'react-native'
-import { StackScreenProps } from '@react-navigation/stack'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import { Button, Image, ScrollView, Text, View } from 'react-native'
 
 import { AuthContext } from '../contexts/auth'
-import { getDocRef } from '../services/api'
-import { AppStackParamList, GameProps } from '../types'
 
-const ProfileScreen = ({ navigation }: StackScreenProps<AppStackParamList>) => {
+const ProfileScreen = () => {
     const { user, signOut } = React.useContext(AuthContext)
-    const [listGames, setListGames] = React.useState<GameProps[]>([])
-    const [loading, setLoading] = React.useState<boolean>(true)
-
-    const myIcon = <Icon name="rocket" size={30} color="#900" />
-
-    React.useEffect(() => {
-        getDocRef('games').onSnapshot(QuerySnapshot => {
-            const gamesSnapshot:
-                | ((prevState: never[]) => never[])
-                | GameProps[] = []
-            QuerySnapshot.docs.forEach(doc => {
-                const { name, status, system } = doc.data()
-                gamesSnapshot.push({
-                    id: doc.id,
-                    name,
-                    status,
-                    system
-                })
-            })
-
-            setListGames(gamesSnapshot)
-            setLoading(false)
-        })
-    }, [])
 
     return (
-        <View>
-            <Text>{user?.displayName}</Text>
-            <Text>
-                {user?.email} {myIcon}
-            </Text>
+        <ScrollView>
+            <Text>my profile</Text>
 
-            {loading ? (
-                <Text>loading games</Text>
-            ) : (
-                listGames.map(game => (
-                    <TouchableOpacity key={game.id} onPress={() => null}>
-                        <Text>{game.name}</Text>
-                        <Text>{game.system}</Text>
-                        <Text>{game.status}</Text>
-                    </TouchableOpacity>
-                ))
-            )}
-
-            <Button
-                title={'Add Game'}
-                onPress={() => navigation.navigate('AddGameScreen')}
+            <Text>{JSON.stringify(user, null, 4)}</Text>
+            <Image
+                style={{ width: 30, height: 30 }}
+                source={{ uri: user?.photoURL }}
             />
+            <View>
+                <Text>Display name</Text>
+                <Text>{user?.displayName}</Text>
+            </View>
+
+            <Text>Account information</Text>
+            <View>
+                <Text>Email</Text>
+                <Text>{user?.email}</Text>
+            </View>
+            <View>
+                <Text>Provider</Text>
+                <Text>{user?.providerId}</Text>
+            </View>
             <Button title={'Logout'} onPress={() => signOut()} />
-        </View>
+        </ScrollView>
     )
 }
 
