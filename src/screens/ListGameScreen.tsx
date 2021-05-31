@@ -22,7 +22,7 @@ export default function ListGameScreen({
     const [loading, setLoading] = React.useState<boolean>(true)
     const [messageFromParams, setMessageFromParams] =
         React.useState<string | null>(null)
-    const [listGames, setListGames] = React.useState([])
+    const [listGames, setListGames] = React.useState<GameProps[]>([])
     const { user } = React.useContext(AuthContext)
 
     React.useEffect(() => {
