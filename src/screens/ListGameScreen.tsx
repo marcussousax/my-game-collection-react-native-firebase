@@ -2,12 +2,13 @@ import * as React from 'react'
 import {
     Button,
     Image,
-    ScrollView,
     StyleSheet,
     View,
     Text,
     ToastAndroid,
-    TouchableOpacity
+    TouchableOpacity,
+    FlatList,
+    ActivityIndicator
 } from 'react-native'
 
 import { getDocRef } from '../services/api'
@@ -31,12 +32,12 @@ export default function ListGameScreen({
                 | ((prevState: never[]) => never[])
                 | GameProps[] = []
             QuerySnapshot.docs.forEach(doc => {
-                const { name, status, system } = doc.data()
+                const { title, userId, createdAt } = doc.data()
                 gamesSnapshot.push({
                     id: doc.id,
-                    name,
-                    status,
-                    system
+                    title,
+                    userId,
+                    createdAt
                 })
             })
 
@@ -52,65 +53,85 @@ export default function ListGameScreen({
         return () => setMessageFromParams(null)
     }, [route.params])
 
-    return (
-        <ScrollView>
-            <View style={styles.container}>
-                <View style={styles.header}>
-                    <Text style={styles.title}>my collection</Text>
-                    <View>
-                        <TouchableOpacity
-                            onPress={() => navigation.navigate('ProfileScreen')}
-                        >
-                            <Image
-                                style={styles.tinyLogo}
-                                source={{ uri: user.photoURL }}
-                            />
-                        </TouchableOpacity>
-                    </View>
-                </View>
+    const renderItem = ({ item }: { item: GameProps }) => {
+        return (
+            <TouchableOpacity
+                style={styles.card}
+                key={item.id}
+                onPress={() =>
+                    navigation.navigate('GameDetailScreen', {
+                        title: item.title,
+                        gameId: item.id,
+                        createdAt: item.createdAt
+                    })
+                }
+            >
+                <Text>{item.title}</Text>
+            </TouchableOpacity>
+        )
+    }
 
-                {messageFromParams}
+    return loading ? (
+        <ActivityIndicator />
+    ) : (
+        <View style={styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.title}>my collection</Text>
+                <Text>{messageFromParams}</Text>
+                <View>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('ProfileScreen')}
+                    >
+                        <Image
+                            style={styles.tinyLogo}
+                            source={{ uri: user?.photoURL || undefined }}
+                        />
+                    </TouchableOpacity>
+                </View>
+            </View>
+            <FlatList
+                scrollEnabled={true}
+                data={listGames}
+                numColumns={3}
+                contentContainerStyle={styles.flatList}
+                renderItem={renderItem}
+            />
+            <View style={styles.footer}>
                 <Button
-                    style={styles.button}
                     onPress={() => navigation.navigate('AddGameScreen')}
                     title={'Add Game'}
                 />
-                {listGames.map(game => (
-                    <TouchableOpacity
-                        key={game.id}
-                        style={styles.button}
-                        onPress={() =>
-                            navigation.navigate('GameDetailScreen', {
-                                gameName: game.name,
-                                gameId: game.id
-                            })
-                        }
-                    >
-                        <Text>{game.name}</Text>
-                        <Text>{game.system}</Text>
-                        <Text>{game.status}</Text>
-                        <View style={styles.separator} />
-                    </TouchableOpacity>
-                ))}
             </View>
-        </ScrollView>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
+    flatList: {
+        flex: 1
+    },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingVertical: 20
     },
+    footer: {
+        paddingVertical: 20
+    },
+    card: {
+        alignItems: 'center',
+        backgroundColor: '#dcda48',
+        flexGrow: 1,
+        margin: 4,
+        padding: 20,
+        flexBasis: 0,
+        borderRadius: 5
+    },
     tinyLogo: {
         width: 32,
         height: 32,
         borderRadius: 20
-    },
-    button: {
-        margin: 10
     },
     container: {
         flex: 1,
