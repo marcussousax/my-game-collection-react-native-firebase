@@ -1,17 +1,11 @@
 import React from 'react'
-import {
-    Button,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    View
-} from 'react-native'
+import { Button, ScrollView, StyleSheet, TextInput, View } from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack'
 
 import { getDocRef } from '../services/api'
 import { AppStackParamList, GameProps } from '../types'
 import { AuthContext } from '../contexts/auth'
+import AppHeader from '../components/AppHeader'
 
 const AddGameScreen = ({ navigation }: StackScreenProps<AppStackParamList>) => {
     const [sending, setSending] = React.useState<boolean>(false)
@@ -52,9 +46,7 @@ const AddGameScreen = ({ navigation }: StackScreenProps<AppStackParamList>) => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.title}>what are you playing?</Text>
-            </View>
+            <AppHeader title={'what are you playing?'} hideAvatar={true} />
             <ScrollView>
                 <TextInput
                     style={styles.input}
@@ -74,20 +66,9 @@ const AddGameScreen = ({ navigation }: StackScreenProps<AppStackParamList>) => {
 }
 
 const styles = StyleSheet.create({
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingVertical: 20
-    },
     container: {
         flex: 1,
         paddingHorizontal: 15
-    },
-    title: {
-        color: '#43DFA8',
-        fontSize: 20,
-        fontWeight: 'bold'
     },
     footer: {
         paddingVertical: 20

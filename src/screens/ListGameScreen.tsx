@@ -1,7 +1,6 @@
 import * as React from 'react'
 import {
     Button,
-    Image,
     StyleSheet,
     View,
     Text,
@@ -12,9 +11,9 @@ import {
 } from 'react-native'
 
 import { getDocRef } from '../services/api'
-import { AuthContext } from '../contexts/auth'
 import { AppStackParamList, GameProps } from '../types'
 import { StackScreenProps } from '@react-navigation/stack'
+import AppHeader from '../components/AppHeader'
 
 export default function ListGameScreen({
     navigation,
@@ -24,7 +23,6 @@ export default function ListGameScreen({
     const [messageFromParams, setMessageFromParams] =
         React.useState<string | null>(null)
     const [listGames, setListGames] = React.useState<GameProps[]>([])
-    const { user } = React.useContext(AuthContext)
 
     React.useEffect(() => {
         getDocRef('games').onSnapshot(QuerySnapshot => {
@@ -75,20 +73,7 @@ export default function ListGameScreen({
         <ActivityIndicator />
     ) : (
         <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.title}>my collection</Text>
-                <Text>{messageFromParams}</Text>
-                <View>
-                    <TouchableOpacity
-                        onPress={() => navigation.navigate('ProfileScreen')}
-                    >
-                        <Image
-                            style={styles.tinyLogo}
-                            source={{ uri: user?.photoURL || undefined }}
-                        />
-                    </TouchableOpacity>
-                </View>
-            </View>
+            <AppHeader title="my game collection" navigation={navigation} />
             <FlatList
                 scrollEnabled={true}
                 data={listGames}
@@ -110,12 +95,6 @@ const styles = StyleSheet.create({
     flatList: {
         flex: 1
     },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingVertical: 20
-    },
     footer: {
         paddingVertical: 20
     },
@@ -128,19 +107,9 @@ const styles = StyleSheet.create({
         flexBasis: 0,
         borderRadius: 5
     },
-    tinyLogo: {
-        width: 32,
-        height: 32,
-        borderRadius: 20
-    },
     container: {
         flex: 1,
         paddingHorizontal: 15
-    },
-    title: {
-        color: '#43DFA8',
-        fontSize: 20,
-        fontWeight: 'bold'
     },
     separator: {
         marginVertical: 30,

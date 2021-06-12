@@ -5,12 +5,12 @@ import {
     Button,
     ScrollView,
     StyleSheet,
-    Text,
     TextInput,
     View
 } from 'react-native'
 import { deleteDoc, getDocRef } from '../services/api'
 import { AuthContext } from '../contexts/auth'
+import AppHeader from '../components/AppHeader'
 
 export default function GameDetailScreen({ navigation, route }) {
     const { gameId } = route.params
@@ -96,9 +96,7 @@ export default function GameDetailScreen({ navigation, route }) {
 
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.title}>update game information</Text>
-            </View>
+            <AppHeader title={'update game information'} hideAvatar={true} />
             <ScrollView>
                 <TextInput
                     style={styles.input}
@@ -124,20 +122,9 @@ export default function GameDetailScreen({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingVertical: 20
-    },
     container: {
         flex: 1,
         paddingHorizontal: 15
-    },
-    title: {
-        color: '#43DFA8',
-        fontSize: 20,
-        fontWeight: 'bold'
     },
     footer: {
         paddingVertical: 20,
