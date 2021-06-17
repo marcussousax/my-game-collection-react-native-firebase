@@ -24,6 +24,7 @@ export default function GameDetailScreen({ navigation, route }) {
     const initialState = {
         id: '',
         title: '',
+        notes: '',
         createdAt: new Date()
     }
     const [currentGame, setCurrentGame] = React.useState(initialState)
@@ -40,6 +41,7 @@ export default function GameDetailScreen({ navigation, route }) {
         setCurrentGame({
             title: game?.title,
             id,
+            notes: game?.notes,
             createdAt: game?.createdAt
         })
         setLoading(false)
@@ -56,6 +58,7 @@ export default function GameDetailScreen({ navigation, route }) {
             .set({
                 title: currentGame.title,
                 createdAt: currentGame?.createdAt,
+                notes: currentGame?.notes,
                 userId: user?.uid
             })
             .then(() => {
@@ -104,6 +107,15 @@ export default function GameDetailScreen({ navigation, route }) {
                     value={currentGame.title}
                     onChangeText={value => handleChange('title', value)}
                 />
+
+                <TextInput
+                    style={[styles.input, { textAlignVertical: 'top' }]}
+                    placeholder={`type some notes about ${currentGame.title.toLowerCase()}`}
+                    numberOfLines={8}
+                    value={currentGame.notes}
+                    multiline={true}
+                    onChangeText={value => handleChange('notes', value)}
+                />
             </ScrollView>
             <View style={styles.footer}>
                 <Button
@@ -134,6 +146,7 @@ const styles = StyleSheet.create({
     input: {
         backgroundColor: '#ddd',
         padding: 12,
-        borderRadius: 5
+        borderRadius: 5,
+        marginBottom: 12
     }
 })
