@@ -20,8 +20,6 @@ export default function ListGameScreen({
     route
 }: StackScreenProps<AppStackParamList>) {
     const [loading, setLoading] = React.useState<boolean>(true)
-    const [messageFromParams, setMessageFromParams] =
-        React.useState<string | null>(null)
     const [listGames, setListGames] = React.useState<GameProps[]>([])
 
     React.useEffect(() => {
@@ -48,7 +46,6 @@ export default function ListGameScreen({
         if (route.params?.message) {
             ToastAndroid.show(route.params.message, ToastAndroid.SHORT)
         }
-        return () => setMessageFromParams(null)
     }, [route.params])
 
     const renderItem = ({ item }: { item: GameProps }) => {
