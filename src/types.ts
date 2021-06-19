@@ -1,3 +1,5 @@
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
+
 /**
  * Learn more about using TypeScript with React Navigation:
  * https://reactnavigation.org/docs/typescript/
@@ -24,6 +26,10 @@ export type AppStackParamList = {
 export type GameProps = {
     id?: string // only for listing the game
     title: string
-    userId: string
+    userId?: string
     createdAt: Date
+    customMeta?:
+        | { notes: string; ratings: number }
+        | FirebaseFirestoreTypes.DocumentData
+        | undefined
 }

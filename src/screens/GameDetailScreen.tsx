@@ -11,6 +11,7 @@ import {
 import { deleteDoc, getDocRef } from '../services/api'
 import { AuthContext } from '../contexts/auth'
 import AppHeader from '../components/AppHeader'
+import { GameProps } from '../types'
 
 export default function GameDetailScreen({ navigation, route }) {
     const { gameId } = route.params
@@ -24,27 +25,33 @@ export default function GameDetailScreen({ navigation, route }) {
     const initialState = {
         id: '',
         title: '',
-        notes: '',
-        createdAt: new Date()
+        createdAt: new Date(),
+        customMeta: undefined
     }
     const [currentGame, setCurrentGame] = React.useState(initialState)
 
     React.useEffect(() => {
-        getGameByID(gameId)
+        getGameByID(gameId).then()
     }, [gameId])
 
     const getGameByID = async (id: string) => {
         const docRef = getDocRef('games').doc(id)
         const doc = await docRef.get()
         const game = doc.data()
-
-        setCurrentGame({
-            title: game?.title,
+        const currentGameSnapshot: GameProps = {
             id,
-            notes: game?.notes,
+            title: game?.title,
             createdAt: game?.createdAt
+        }
+
+        const metaRef = docRef.collection('custom_meta')
+        metaRef.onSnapshot(querySnapshot => {
+            querySnapshot.docs.forEach(metaDoc => {
+                currentGameSnapshot.customMeta = metaDoc.data()
+            })
+            setCurrentGame(currentGameSnapshot)
+            setLoading(false)
         })
-        setLoading(false)
     }
 
     const handleChange = (title: string, value: string) => {
@@ -58,7 +65,6 @@ export default function GameDetailScreen({ navigation, route }) {
             .set({
                 title: currentGame.title,
                 createdAt: currentGame?.createdAt,
-                notes: currentGame?.notes,
                 userId: user?.uid
             })
             .then(() => {
@@ -112,7 +118,7 @@ export default function GameDetailScreen({ navigation, route }) {
                     style={[styles.input, { textAlignVertical: 'top' }]}
                     placeholder={`type some notes about ${currentGame.title.toLowerCase()}`}
                     numberOfLines={8}
-                    value={currentGame.notes}
+                    value={currentGame.customMeta?.notes}
                     multiline={true}
                     onChangeText={value => handleChange('notes', value)}
                 />
