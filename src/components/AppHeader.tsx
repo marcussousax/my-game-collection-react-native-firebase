@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         paddingVertical: 20
     },
     title: {
-        color: '#43DFA8',
+        color: '#02cbd3',
         fontSize: 20,
         fontWeight: 'bold'
     },

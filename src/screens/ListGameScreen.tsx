@@ -61,7 +61,7 @@ export default function ListGameScreen({
                     })
                 }
             >
-                <Text>{item.title}</Text>
+                <Text style={styles.cardText}>{item.title}</Text>
             </TouchableOpacity>
         )
     }
@@ -97,12 +97,18 @@ const styles = StyleSheet.create({
     },
     card: {
         alignItems: 'center',
-        backgroundColor: '#dcda48',
+        justifyContent: 'center',
+        backgroundColor: '#02cbd3',
         flexGrow: 1,
         margin: 4,
         padding: 20,
         flexBasis: 0,
-        borderRadius: 5
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#009aa0'
+    },
+    cardText: {
+        color: '#fff'
     },
     container: {
         flex: 1,
