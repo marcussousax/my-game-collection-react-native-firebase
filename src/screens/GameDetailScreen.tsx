@@ -47,11 +47,14 @@ export default function GameDetailScreen({ navigation, route }) {
         const metaRef = docRef.collection('custom_meta')
         metaRef.onSnapshot(querySnapshot => {
             querySnapshot.docs.forEach(metaDoc => {
-                currentGameSnapshot.customMeta = metaDoc.data()
+                setCurrentGame({
+                    ...currentGameSnapshot,
+                    customMeta: metaDoc.data()
+                })
             })
-            setCurrentGame(currentGameSnapshot)
-            setLoading(false)
         })
+        setCurrentGame(currentGameSnapshot)
+        setLoading(false)
     }
 
     const handleChange = (key: string, value: string, parent?: string) => {
@@ -102,12 +105,18 @@ export default function GameDetailScreen({ navigation, route }) {
             .catch(error => console.log(error))
     }
 
-    const handleDelete = (id: string) => {
+    const handleDelete = async (id: string) => {
         setLoading(true)
-        deleteDoc('games', id)
-            .then(() => {
-                deleteDoc('custom_meta')
-            })
+        const batch = firestore().batch()
+
+        const docRef = getDocRef('games').doc(id)
+        batch.delete(docRef)
+
+        const customMetaRef = docRef.collection('custom_meta')
+        batch.delete(customMetaRef.doc('notes'))
+
+        await batch
+            .commit()
             .then(() => {
                 navigation.navigate('ListGameScreen', {
                     message: 'Game deleted'
