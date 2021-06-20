@@ -28,6 +28,7 @@ export type GameProps = {
     title: string
     userId?: string
     createdAt: Date
+    rating?: number
     customMeta?:
         | { notes: string; ratings: number }
         | FirebaseFirestoreTypes.DocumentData

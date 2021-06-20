@@ -9,9 +9,9 @@ import {
     View
 } from 'react-native'
 import { deleteDoc, getDocRef } from '../services/api'
-import { AuthContext } from '../contexts/auth'
 import AppHeader from '../components/AppHeader'
 import { GameProps } from '../types'
+import firestore from '@react-native-firebase/firestore'
 
 export default function GameDetailScreen({ navigation, route }) {
     const { gameId } = route.params
@@ -19,13 +19,12 @@ export default function GameDetailScreen({ navigation, route }) {
     const [loading, setLoading] = React.useState(true)
     const [sending, setSending] = React.useState<boolean>(false)
 
-    const { user } = React.useContext(AuthContext)
-
     // Don't know if it is the beast approach. Maybe get the initial state from params?
     const initialState = {
         id: '',
         title: '',
         createdAt: new Date(),
+        rating: undefined,
         customMeta: undefined
     }
     const [currentGame, setCurrentGame] = React.useState(initialState)
@@ -41,7 +40,8 @@ export default function GameDetailScreen({ navigation, route }) {
         const currentGameSnapshot: GameProps = {
             id,
             title: game?.title,
-            createdAt: game?.createdAt
+            createdAt: game?.createdAt,
+            rating: game?.rating
         }
 
         const metaRef = docRef.collection('custom_meta')
@@ -54,19 +54,44 @@ export default function GameDetailScreen({ navigation, route }) {
         })
     }
 
-    const handleChange = (title: string, value: string) => {
-        setCurrentGame({ ...currentGame, [title]: value })
+    const handleChange = (key: string, value: string, parent?: string) => {
+        if (parent) {
+            setCurrentGame({
+                ...currentGame,
+                [parent]: {
+                    [key]: value
+                }
+            })
+        } else {
+            setCurrentGame({
+                ...currentGame,
+                [key]: value
+            })
+        }
     }
 
     const updateGame = async (id: string) => {
         setSending(true)
+
+        const batch = firestore().batch()
+
         const docRef = getDocRef('games').doc(id)
-        await docRef
-            .set({
-                title: currentGame.title,
-                createdAt: currentGame?.createdAt,
-                userId: user?.uid
-            })
+        batch.update(docRef, {
+            title: currentGame.title,
+            rating: currentGame.rating
+        })
+
+        const notesRef = docRef.collection('custom_meta').doc('notes')
+        batch.set(
+            notesRef,
+            { notes: currentGame?.customMeta?.notes },
+            {
+                merge: true
+            }
+        )
+
+        await batch
+            .commit()
             .then(() => {
                 setCurrentGame(initialState)
                 setSending(false)
@@ -80,6 +105,9 @@ export default function GameDetailScreen({ navigation, route }) {
     const handleDelete = (id: string) => {
         setLoading(true)
         deleteDoc('games', id)
+            .then(() => {
+                deleteDoc('custom_meta')
+            })
             .then(() => {
                 navigation.navigate('ListGameScreen', {
                     message: 'Game deleted'
@@ -120,7 +148,15 @@ export default function GameDetailScreen({ navigation, route }) {
                     numberOfLines={8}
                     value={currentGame.customMeta?.notes}
                     multiline={true}
-                    onChangeText={value => handleChange('notes', value)}
+                    onChangeText={value =>
+                        handleChange('notes', value, 'customMeta')
+                    }
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder={'Rating'}
+                    value={currentGame.rating}
+                    onChangeText={value => handleChange('rating', value)}
                 />
             </ScrollView>
             <View style={styles.footer}>
