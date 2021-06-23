@@ -20,17 +20,15 @@ export type AppStackParamList = {
         title: string | undefined
         gameId: string | undefined
         createdAt: Date
+        rating: number
     }
 }
 
 export type GameProps = {
-    id?: string // only for listing the game
+    gameId?: string
     title: string
     userId?: string
     createdAt: Date
-    rating?: number
-    customMeta?:
-        | { notes: string; ratings: number }
-        | FirebaseFirestoreTypes.DocumentData
-        | undefined
+    rating: number
+    notes: string
 }

@@ -12,10 +12,12 @@ const AddGameScreen = ({ navigation }: StackScreenProps<AppStackParamList>) => {
 
     const { user } = React.useContext(AuthContext)
 
-    const gameDocumentInitialState = {
+    const gameDocumentInitialState: GameProps = {
+        userId: user?.uid,
         title: '',
-        userId: '',
-        createdAt: new Date()
+        createdAt: new Date(),
+        rating: 0,
+        notes: ''
     }
 
     // State that will be sent to Firebase
@@ -25,14 +27,9 @@ const AddGameScreen = ({ navigation }: StackScreenProps<AppStackParamList>) => {
 
     const maybeSaveGame = async () => {
         setSending(true)
-        await getDocRef('games')
-            .add({
-                title: gameDocument.title,
-                userId: user?.uid,
-                createdAt: new Date()
-            })
+        await getDocRef('GAMES')
+            .add(gameDocument)
             .then(() => {
-                setGameDocument(gameDocumentInitialState)
                 setSending(false)
                 navigation.navigate('ListGameScreen', {
                     message: 'Game created'

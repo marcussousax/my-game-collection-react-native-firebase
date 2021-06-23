@@ -8,69 +8,41 @@ import {
     TextInput,
     View
 } from 'react-native'
-import { deleteDoc, getDocRef } from '../services/api'
+import { getDocRef } from '../services/api'
 import AppHeader from '../components/AppHeader'
 import { GameProps } from '../types'
 import firestore from '@react-native-firebase/firestore'
+import Rating from '../components/Rating'
 
 export default function GameDetailScreen({ navigation, route }) {
-    const { gameId } = route.params
+    const { game } = route.params
 
     const [loading, setLoading] = React.useState(true)
     const [sending, setSending] = React.useState<boolean>(false)
 
-    // Don't know if it is the beast approach. Maybe get the initial state from params?
-    const initialState = {
-        id: '',
-        title: '',
-        createdAt: new Date(),
-        rating: undefined,
-        customMeta: undefined
-    }
-    const [currentGame, setCurrentGame] = React.useState(initialState)
+    const [currentGame, setCurrentGame] = React.useState<GameProps>()
 
     React.useEffect(() => {
-        getGameByID(gameId).then()
-    }, [gameId])
-
-    const getGameByID = async (id: string) => {
-        const docRef = getDocRef('games').doc(id)
-        const doc = await docRef.get()
-        const game = doc.data()
-        const currentGameSnapshot: GameProps = {
-            id,
-            title: game?.title,
-            createdAt: game?.createdAt,
-            rating: game?.rating
-        }
-
-        const metaRef = docRef.collection('custom_meta')
-        metaRef.onSnapshot(querySnapshot => {
-            querySnapshot.docs.forEach(metaDoc => {
-                setCurrentGame({
-                    ...currentGameSnapshot,
-                    customMeta: metaDoc.data()
-                })
+        const unsubscribe = getDocRef('GAMES')
+            .doc(game.gameId)
+            .onSnapshot(querySnapshot => {
+                const firebaseData = querySnapshot.data()
+                const data = {
+                    gameId: game.gameId,
+                    title: firebaseData?.title,
+                    createdAt: firebaseData?.createdAt,
+                    rating: firebaseData?.rating,
+                    notes: firebaseData?.notes
+                } as GameProps
+                setCurrentGame(data)
+                setLoading(false)
             })
-        })
-        setCurrentGame(currentGameSnapshot)
-        setLoading(false)
-    }
 
-    const handleChange = (key: string, value: string, parent?: string) => {
-        if (parent) {
-            setCurrentGame({
-                ...currentGame,
-                [parent]: {
-                    [key]: value
-                }
-            })
-        } else {
-            setCurrentGame({
-                ...currentGame,
-                [key]: value
-            })
-        }
+        return () => unsubscribe()
+    }, [])
+
+    const handleChange = (key: string, value: string | number) => {
+        setCurrentGame({ ...currentGame, [key]: value })
     }
 
     const updateGame = async (id: string) => {
@@ -78,25 +50,16 @@ export default function GameDetailScreen({ navigation, route }) {
 
         const batch = firestore().batch()
 
-        const docRef = getDocRef('games').doc(id)
+        const docRef = getDocRef('GAMES').doc(id)
         batch.update(docRef, {
-            title: currentGame.title,
-            rating: currentGame.rating
+            title: currentGame?.title,
+            rating: currentGame?.rating,
+            notes: currentGame?.notes
         })
-
-        const notesRef = docRef.collection('custom_meta').doc('notes')
-        batch.set(
-            notesRef,
-            { notes: currentGame?.customMeta?.notes },
-            {
-                merge: true
-            }
-        )
 
         await batch
             .commit()
             .then(() => {
-                setCurrentGame(initialState)
                 setSending(false)
                 navigation.navigate('ListGameScreen', {
                     message: 'Game updated'
@@ -109,11 +72,8 @@ export default function GameDetailScreen({ navigation, route }) {
         setLoading(true)
         const batch = firestore().batch()
 
-        const docRef = getDocRef('games').doc(id)
+        const docRef = getDocRef('GAMES').doc(id)
         batch.delete(docRef)
-
-        const customMetaRef = docRef.collection('custom_meta')
-        batch.delete(customMetaRef.doc('notes'))
 
         await batch
             .commit()
@@ -127,7 +87,7 @@ export default function GameDetailScreen({ navigation, route }) {
 
     const confirmDelete = () => {
         Alert.alert('Are you sure?', 'Confirm?', [
-            { text: 'yes', onPress: () => handleDelete(gameId) },
+            { text: 'yes', onPress: () => handleDelete(game.gameId) },
             { text: 'no', onPress: () => null }
         ])
     }
@@ -147,32 +107,30 @@ export default function GameDetailScreen({ navigation, route }) {
                 <TextInput
                     style={styles.input}
                     placeholder={'Title'}
-                    value={currentGame.title}
+                    value={currentGame?.title}
                     onChangeText={value => handleChange('title', value)}
                 />
 
                 <TextInput
                     style={[styles.input, { textAlignVertical: 'top' }]}
-                    placeholder={`type some notes about ${currentGame.title.toLowerCase()}`}
+                    placeholder={`type some notes about ${currentGame?.title?.toLowerCase()}`}
                     numberOfLines={8}
-                    value={currentGame.customMeta?.notes}
+                    value={currentGame?.notes}
                     multiline={true}
-                    onChangeText={value =>
-                        handleChange('notes', value, 'customMeta')
-                    }
+                    onChangeText={value => handleChange('notes', value)}
                 />
-                <TextInput
-                    style={styles.input}
-                    placeholder={'Rating'}
-                    value={currentGame.rating}
-                    onChangeText={value => handleChange('rating', value)}
-                />
+                <View style={styles.spacer} />
             </ScrollView>
+            <Rating
+                viewStyle={styles.rating}
+                currentGame={currentGame}
+                handleChange={handleChange}
+            />
             <View style={styles.footer}>
                 <Button
                     title={'Update Game'}
                     disabled={sending}
-                    onPress={() => updateGame(gameId)}
+                    onPress={() => updateGame(game.gameId)}
                 />
                 <Button
                     title={'Delete Game'}
@@ -185,9 +143,16 @@ export default function GameDetailScreen({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
+    spacer: {
+        flex: 1
+    },
     container: {
         flex: 1,
         paddingHorizontal: 15
+    },
+    rating: {
+        alignItems: 'center',
+        paddingVertical: 50
     },
     footer: {
         paddingVertical: 20,

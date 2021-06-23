@@ -14,6 +14,7 @@ import { getDocRef } from '../services/api'
 import { AppStackParamList, GameProps } from '../types'
 import { StackScreenProps } from '@react-navigation/stack'
 import AppHeader from '../components/AppHeader'
+import Rating from '../components/Rating'
 
 export default function ListGameScreen({
     navigation,
@@ -23,23 +24,26 @@ export default function ListGameScreen({
     const [listGames, setListGames] = React.useState<GameProps[]>([])
 
     React.useEffect(() => {
-        getDocRef('games').onSnapshot(QuerySnapshot => {
+        const unsubscribe = getDocRef('GAMES').onSnapshot(QuerySnapshot => {
             const gamesSnapshot:
                 | ((prevState: never[]) => never[])
                 | GameProps[] = []
             QuerySnapshot.docs.forEach(doc => {
-                const { title, userId, createdAt } = doc.data()
+                const { title, userId, createdAt, rating } = doc.data()
                 gamesSnapshot.push({
-                    id: doc.id,
+                    gameId: doc.id,
+                    notes: '',
                     title,
                     userId,
-                    createdAt
+                    createdAt,
+                    rating
                 })
             })
-
             setListGames(gamesSnapshot)
             setLoading(false)
         })
+
+        return () => unsubscribe()
     }, [])
 
     React.useEffect(() => {
@@ -52,16 +56,23 @@ export default function ListGameScreen({
         return (
             <TouchableOpacity
                 style={styles.card}
-                key={item.id}
+                key={item.gameId}
                 onPress={() =>
-                    navigation.navigate('GameDetailScreen', {
-                        title: item.title,
-                        gameId: item.id,
-                        createdAt: item.createdAt
-                    })
+                    navigation.navigate('GameDetailScreen', { game: item })
                 }
             >
-                <Text style={styles.cardText}>{item.title}</Text>
+                <View>
+                    <Text style={styles.cardText}>{item.title}</Text>
+                    {item.rating !== 0 ? (
+                        <Rating
+                            hideTitle={true}
+                            currentGame={item}
+                            disabled={true}
+                            starSize={10}
+                            hideEmptyStar={true}
+                        />
+                    ) : null}
+                </View>
             </TouchableOpacity>
         )
     }
@@ -77,6 +88,7 @@ export default function ListGameScreen({
                 numColumns={3}
                 contentContainerStyle={styles.flatList}
                 renderItem={renderItem}
+                keyExtractor={item => item.gameId}
             />
             <View style={styles.footer}>
                 <Button
