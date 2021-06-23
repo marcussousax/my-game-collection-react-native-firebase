@@ -1,5 +1,4 @@
 import React from 'react'
-// @ts-ignore
 import StarRating from 'react-native-star-rating'
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { GameProps } from '../types'
@@ -11,7 +10,7 @@ const Rating: React.FC<{
     hideTitle?: boolean
     hideEmptyStar?: boolean
     disabled?: boolean
-    handleChange?: (key: string, value: string) => void
+    handleChange?: (key: string, value: number) => void
     starSize?: number
     viewStyle?: StyleProp<ViewStyle>
 }> = ({
@@ -40,7 +39,7 @@ const Rating: React.FC<{
                 starSize={starSize}
                 starStyle={{ padding: 5 }}
                 rating={currentGame?.rating}
-                selectedStar={(value: string) =>
+                selectedStar={(value: number) =>
                     handleChange ? handleChange('rating', value) : null
                 }
             />
