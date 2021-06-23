@@ -15,6 +15,7 @@ import { AppStackParamList, GameProps } from '../types'
 import { StackScreenProps } from '@react-navigation/stack'
 import AppHeader from '../components/AppHeader'
 import Rating from '../components/Rating'
+import { AuthContext } from '../contexts/auth'
 
 export default function ListGameScreen({
     navigation,
@@ -22,26 +23,28 @@ export default function ListGameScreen({
 }: StackScreenProps<AppStackParamList>) {
     const [loading, setLoading] = React.useState<boolean>(true)
     const [listGames, setListGames] = React.useState<GameProps[]>([])
-
+    const { user } = React.useContext(AuthContext)
     React.useEffect(() => {
-        const unsubscribe = getDocRef('GAMES').onSnapshot(QuerySnapshot => {
-            const gamesSnapshot:
-                | ((prevState: never[]) => never[])
-                | GameProps[] = []
-            QuerySnapshot.docs.forEach(doc => {
-                const { title, userId, createdAt, rating } = doc.data()
-                gamesSnapshot.push({
-                    gameId: doc.id,
-                    notes: '',
-                    title,
-                    userId,
-                    createdAt,
-                    rating
+        const unsubscribe = getDocRef('GAMES')
+            .where('userId', '==', user?.uid)
+            .onSnapshot(QuerySnapshot => {
+                const gamesSnapshot:
+                    | ((prevState: never[]) => never[])
+                    | GameProps[] = []
+                QuerySnapshot.docs.forEach(doc => {
+                    const { title, userId, createdAt, rating } = doc.data()
+                    gamesSnapshot.push({
+                        gameId: doc.id,
+                        notes: '',
+                        title,
+                        userId,
+                        createdAt,
+                        rating
+                    })
                 })
+                setListGames(gamesSnapshot)
+                setLoading(false)
             })
-            setListGames(gamesSnapshot)
-            setLoading(false)
-        })
 
         return () => unsubscribe()
     }, [])
@@ -76,7 +79,6 @@ export default function ListGameScreen({
             </TouchableOpacity>
         )
     }
-
     return loading ? (
         <ActivityIndicator />
     ) : (

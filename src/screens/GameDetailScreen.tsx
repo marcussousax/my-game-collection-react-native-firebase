@@ -39,7 +39,7 @@ export default function GameDetailScreen({ navigation, route }) {
             })
 
         return () => unsubscribe()
-    }, [])
+    }, [game.gameId])
 
     const handleChange = (key: string, value: string | number) => {
         setCurrentGame({ ...currentGame, [key]: value })
