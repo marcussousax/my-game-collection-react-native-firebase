@@ -6,7 +6,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "test": "jest",
+    "test": "jest --watchAll",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
@@ -51,6 +51,7 @@
   },
   "jest": {
     "preset": "react-native",
+    "setupFilesAfterEnv": ["./src/setupTests.js"],
     "transformIgnorePatterns": [
       "node_modules/(?!(@react-native|react-native|@react-native-google-signin/google-signin|@react-native-firebase)/)"
     ],

@@ -3,7 +3,6 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { AuthContext } from '../contexts/auth'
 
-// To be used with Authenticated User
 const AppHeader: React.FC<{
     title?: string
     hideAvatar?: boolean
