@@ -36,6 +36,7 @@
     "@babel/core": "^7.14.6",
     "@babel/runtime": "^7.14.6",
     "@react-native-community/eslint-config": "^3.0.0",
+    "@testing-library/react-native": "^7.2.0",
     "@types/jest": "^26.0.23",
     "@types/react-native": "^0.64.10",
     "@types/react-test-renderer": "^17.0.1",
@@ -51,9 +52,11 @@
   },
   "jest": {
     "preset": "react-native",
-    "setupFilesAfterEnv": ["./src/setupTests.js"],
+    "setupFilesAfterEnv": [
+      "./src/setupTests.js"
+    ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(@react-native|react-native|@react-native-google-signin/google-signin|@react-native-firebase)/)"
+      "node_modules/(?!(@react-native|react-native|@react-native-google-signin/google-signin|@react-native-firebase|react-native-vector-icons|react-native-button|react-native-animatable|react-native-star-rating)/)"
     ],
     "moduleFileExtensions": [
       "ts",

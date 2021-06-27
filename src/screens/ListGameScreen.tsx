@@ -53,7 +53,7 @@ export default function ListGameScreen({
         if (route.params?.message) {
             ToastAndroid.show(route.params.message, ToastAndroid.SHORT)
         }
-    }, [route.params])
+    }, [route?.params])
 
     const renderItem = ({ item }: { item: GameProps }) => {
         return (
