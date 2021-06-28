@@ -31,4 +31,11 @@ export type GameProps = {
     createdAt: Date
     rating: number
     notes: string
+    systems: []
+}
+
+export type SystemProps = {
+    iconURI?: string
+    name: string
+    slug: string
 }

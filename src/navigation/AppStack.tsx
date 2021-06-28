@@ -12,7 +12,16 @@ const Stack = createStackNavigator<AppStackParamList>()
 const AppStack = () => {
     return (
         <Stack.Navigator initialRouteName={'ListGameScreen'}>
-            <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+            <Stack.Screen
+                name="ProfileScreen"
+                component={ProfileScreen}
+                options={{
+                    title: '',
+                    headerStyle: {
+                        backgroundColor: '#02cbd3'
+                    }
+                }}
+            />
             <Stack.Screen
                 name="ListGameScreen"
                 component={ListGameScreen}

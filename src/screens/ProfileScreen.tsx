@@ -7,30 +7,40 @@ const ProfileScreen = () => {
     const { user, signOut } = React.useContext(AuthContext)
 
     return (
-        <ScrollView>
-            <Text>my profile</Text>
-
-            <Text>{JSON.stringify(user, null, 4)}</Text>
-            <Image
-                style={{ width: 30, height: 30 }}
-                source={{ uri: user?.photoURL }}
-            />
-            <View>
-                <Text>Display name</Text>
-                <Text>{user?.displayName}</Text>
+        <>
+            <View
+                style={{
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                    left: 0,
+                    right: 0,
+                    height: 100,
+                    backgroundColor: '#02cbd3',
+                    marginBottom: 150
+                }}
+            >
+                <Image
+                    style={{
+                        width: 90,
+                        height: 90,
+                        borderRadius: 60,
+                        marginTop: 40,
+                        position: 'absolute',
+                        top: 10
+                    }}
+                    source={{ uri: user?.photoURL }}
+                />
+                <Text style={{ fontSize: 30, position: 'absolute', top: 150 }}>
+                    {user?.displayName}
+                </Text>
+                <Text style={{ fontSize: 15, position: 'absolute', top: 190 }}>
+                    {user?.email}
+                </Text>
             </View>
-
-            <Text>Account information</Text>
-            <View>
-                <Text>Email</Text>
-                <Text>{user?.email}</Text>
-            </View>
-            <View>
-                <Text>Provider</Text>
-                <Text>{user?.providerId}</Text>
-            </View>
-            <Button title={'Logout'} onPress={() => signOut()} />
-        </ScrollView>
+            <ScrollView>
+                <Button title={'Logout'} onPress={() => signOut()} />
+            </ScrollView>
+        </>
     )
 }
 
