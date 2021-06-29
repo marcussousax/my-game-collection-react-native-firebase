@@ -16,3 +16,7 @@ Enjoy! 🤖
 
 #### Assets
 Images from https://www.freepik.com/vectors/background - Background vector created by starline - www.freepik.com
+
+---
+### Issues
+Jest -> create-cache-key error - https://github.com/callstack/react-native-testing-library/issues/743#issuecomment-851020892
