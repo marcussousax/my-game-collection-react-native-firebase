@@ -1,0 +1,487 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<OnboardingScreen> it renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <RCTScrollView
+    bottomButton={false}
+    bounces={false}
+    data={
+      Array [
+        Object {
+          "bg": "#fff",
+          "color": "#000",
+          "image": Object {
+            "testUri": "../../../src/assets/bg-onboarding-welcome.png",
+          },
+          "text": "to my React Native app
+",
+          "title": "Welcome",
+        },
+        Object {
+          "bg": "#fff",
+          "image": Object {
+            "testUri": "../../../src/assets/bg-onboarding-step2.png",
+          },
+          "text": "a \\"bare\\" React Native CRUD
+ using Typescript and Firebase.",
+          "title": "Share some Feedbacks",
+        },
+        Object {
+          "bg": "#fff",
+          "image": Object {
+            "testUri": "../../../src/assets/bg-onboarding-enjoy.png",
+          },
+          "text": "this a studying-purpose project.
+ feel free to test it and give some feedback.",
+          "title": "Enjoy!",
+        },
+      ]
+    }
+    disableVirtualization={false}
+    dotClickEnabled={true}
+    extraData={1}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    horizontal={true}
+    initialNumToRender={3}
+    keyExtractor={[Function]}
+    maxToRenderPerBatch={10}
+    onContentSizeChange={[Function]}
+    onDone={[Function]}
+    onEndReachedThreshold={2}
+    onLayout={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    onSkip={[Function]}
+    pagingEnabled={true}
+    removeClippedSubviews={false}
+    renderDoneButton={[Function]}
+    renderItem={[Function]}
+    renderNextButton={[Function]}
+    renderSkipButton={[Function]}
+    scrollEventThrottle={50}
+    showDoneButton={true}
+    showNextButton={true}
+    showPrevButton={false}
+    showSkipButton={true}
+    showsHorizontalScrollIndicator={false}
+    stickyHeaderIndices={Array []}
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+    updateCellsBatchingPeriod={50}
+    viewabilityConfigCallbackPairs={Array []}
+    windowSize={21}
+  >
+    <View>
+      <View
+        onLayout={[Function]}
+        style={
+          Array [
+            Object {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          style={
+            Object {
+              "flex": 1,
+              "width": 0,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "blue",
+                  "flex": 1,
+                  "justifyContent": "center",
+                },
+                Object {
+                  "backgroundColor": "#fff",
+                  "flex": 1,
+                },
+              ]
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#43DFA8",
+                  "fontSize": 21,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                }
+              }
+            >
+              Welcome
+            </Text>
+            <Image
+              source={
+                Object {
+                  "testUri": "../../../src/assets/bg-onboarding-welcome.png",
+                }
+              }
+              style={
+                Object {
+                  "borderRadius": 32,
+                  "height": 320,
+                  "marginVertical": 32,
+                  "width": 320,
+                }
+              }
+            />
+            <Text
+              style={
+                Object {
+                  "color": "#000",
+                  "fontSize": 19,
+                  "textAlign": "center",
+                }
+              }
+            >
+              to my React Native app
+
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
+        style={
+          Array [
+            Object {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          style={
+            Object {
+              "flex": 1,
+              "width": 0,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "blue",
+                  "flex": 1,
+                  "justifyContent": "center",
+                },
+                Object {
+                  "backgroundColor": "#fff",
+                  "flex": 1,
+                },
+              ]
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#43DFA8",
+                  "fontSize": 21,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                }
+              }
+            >
+              Share some Feedbacks
+            </Text>
+            <Image
+              source={
+                Object {
+                  "testUri": "../../../src/assets/bg-onboarding-step2.png",
+                }
+              }
+              style={
+                Object {
+                  "borderRadius": 32,
+                  "height": 320,
+                  "marginVertical": 32,
+                  "width": 320,
+                }
+              }
+            />
+            <Text
+              style={
+                Object {
+                  "color": "#000",
+                  "fontSize": 19,
+                  "textAlign": "center",
+                }
+              }
+            >
+              a "bare" React Native CRUD
+ using Typescript and Firebase.
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
+        style={
+          Array [
+            Object {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          style={
+            Object {
+              "flex": 1,
+              "width": 0,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "blue",
+                  "flex": 1,
+                  "justifyContent": "center",
+                },
+                Object {
+                  "backgroundColor": "#fff",
+                  "flex": 1,
+                },
+              ]
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#43DFA8",
+                  "fontSize": 21,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                }
+              }
+            >
+              Enjoy!
+            </Text>
+            <Image
+              source={
+                Object {
+                  "testUri": "../../../src/assets/bg-onboarding-enjoy.png",
+                }
+              }
+              style={
+                Object {
+                  "borderRadius": 32,
+                  "height": 320,
+                  "marginVertical": 32,
+                  "width": 320,
+                }
+              }
+            />
+            <Text
+              style={
+                Object {
+                  "color": "#000",
+                  "fontSize": 19,
+                  "textAlign": "center",
+                }
+              }
+            >
+              this a studying-purpose project.
+ feel free to test it and give some feedback.
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+  <View
+    style={
+      Object {
+        "bottom": 16,
+        "justifyContent": "center",
+        "left": 16,
+        "position": "absolute",
+        "right": 16,
+      }
+    }
+  >
+    <RCTSafeAreaView
+      emulateUnlessSupported={true}
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "height": 16,
+            "justifyContent": "center",
+            "margin": 16,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#43DFA8",
+              "borderRadius": 5,
+              "height": 10,
+              "marginHorizontal": 4,
+              "opacity": 1,
+              "width": 10,
+            }
+          }
+        />
+        <View
+          accessible={true}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#C4C4C4",
+              "borderRadius": 5,
+              "height": 10,
+              "marginHorizontal": 4,
+              "opacity": 1,
+              "width": 10,
+            }
+          }
+        />
+        <View
+          accessible={true}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#C4C4C4",
+              "borderRadius": 5,
+              "height": 10,
+              "marginHorizontal": 4,
+              "opacity": 1,
+              "width": 10,
+            }
+          }
+        />
+      </View>
+      <View
+        style={
+          Object {
+            "position": "absolute",
+            "right": 0,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#C4C4C4",
+                "fontWeight": "600",
+                "marginVertical": 12,
+              }
+            }
+          >
+            next
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "left": 0,
+            "position": "absolute",
+          }
+        }
+      >
+        <View
+          accessible={true}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#C4C4C4",
+                "fontWeight": "600",
+                "marginVertical": 12,
+              }
+            }
+          >
+            skip
+          </Text>
+        </View>
+      </View>
+    </RCTSafeAreaView>
+  </View>
+</View>
+`;

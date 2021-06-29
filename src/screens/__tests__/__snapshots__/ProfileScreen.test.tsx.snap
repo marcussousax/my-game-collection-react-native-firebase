@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ProfileScreen> it renders correctly 1`] = `
+Array [
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#02cbd3",
+        "height": 100,
+        "justifyContent": "flex-end",
+        "left": 0,
+        "marginBottom": 150,
+        "right": 0,
+      }
+    }
+  >
+    <Image
+      source={
+        Object {
+          "uri": undefined,
+        }
+      }
+      style={
+        Object {
+          "borderRadius": 60,
+          "height": 90,
+          "marginTop": 40,
+          "position": "absolute",
+          "top": 10,
+          "width": 90,
+        }
+      }
+    />
+    <Text
+      style={
+        Object {
+          "fontSize": 30,
+          "position": "absolute",
+          "top": 150,
+        }
+      }
+    />
+    <Text
+      style={
+        Object {
+          "fontSize": 15,
+          "position": "absolute",
+          "top": 190,
+        }
+      }
+    />
+  </View>,
+  <RCTScrollView>
+    <View>
+      <View
+        accessibilityRole="button"
+        accessibilityState={Object {}}
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {},
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#007AFF",
+                  "fontSize": 18,
+                  "margin": 8,
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            Logout
+          </Text>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>,
+]
+`;
