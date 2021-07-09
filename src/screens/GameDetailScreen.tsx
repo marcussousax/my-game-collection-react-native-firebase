@@ -13,6 +13,7 @@ import AppHeader from '../components/AppHeader'
 import { GameProps } from '../types'
 import firestore from '@react-native-firebase/firestore'
 import Rating from '../components/Rating'
+import SystemSelector from '../components/SystemSelector'
 
 export default function GameDetailScreen({ navigation, route }) {
     const { game } = route.params
@@ -32,7 +33,8 @@ export default function GameDetailScreen({ navigation, route }) {
                     title: firebaseData?.title,
                     createdAt: firebaseData?.createdAt,
                     rating: firebaseData?.rating,
-                    notes: firebaseData?.notes
+                    notes: firebaseData?.notes,
+                    systems: firebaseData?.systems
                 } as GameProps
                 setCurrentGame(data)
                 setLoading(false)
@@ -41,7 +43,7 @@ export default function GameDetailScreen({ navigation, route }) {
         return () => unsubscribe()
     }, [game.gameId])
 
-    const handleChange = (key: string, value: string | number) => {
+    const handleChange = (key: string, value: string | number | string[]) => {
         setCurrentGame({ ...currentGame, [key]: value })
     }
 
@@ -54,7 +56,8 @@ export default function GameDetailScreen({ navigation, route }) {
         batch.update(docRef, {
             title: currentGame?.title,
             rating: currentGame?.rating,
-            notes: currentGame?.notes
+            notes: currentGame?.notes,
+            systems: currentGame?.systems
         })
 
         await batch
@@ -120,6 +123,11 @@ export default function GameDetailScreen({ navigation, route }) {
                     onChangeText={value => handleChange('notes', value)}
                 />
                 <View style={styles.spacer} />
+
+                <SystemSelector
+                    currentGame={currentGame}
+                    handleChange={handleChange}
+                />
             </ScrollView>
             <Rating
                 viewStyle={styles.rating}

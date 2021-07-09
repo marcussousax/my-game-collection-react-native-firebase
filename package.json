@@ -11,12 +11,12 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.5",
+    "@react-native-community/blur": "^3.6.0",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-firebase/app": "^12.1.0",
     "@react-native-firebase/auth": "^12.1.0",
     "@react-native-firebase/firestore": "^12.1.0",
     "@react-native-google-signin/google-signin": "^6.0.1",
-    "@react-native-picker/picker": "^1.16.1",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.5",
     "@types/react": "^17.0.11",
@@ -25,6 +25,7 @@
     "react": "17.0.2",
     "react-native": "0.64.2",
     "react-native-app-intro-slider": "^4.0.4",
+    "react-native-bouncy-checkbox": "^2.1.2",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-reanimated": "^2.2.0",
     "react-native-safe-area-context": "^3.2.0",
@@ -57,7 +58,7 @@
       "./src/setupTests.js"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(@react-native|react-native-app-intro-slider|react-native|@react-native-google-signin/google-signin|@react-native-firebase|react-native-vector-icons|react-native-button|react-native-animatable|react-native-star-rating)/)"
+      "node_modules/(?!(@react-native|react-native-app-intro-slider|react-native|@react-native-google-signin/google-signin|@react-native-firebase|react-native-vector-icons|react-native-button|react-native-animatable|react-native-star-rating|react-native-bouncy-checkbox)/)"
     ],
     "moduleFileExtensions": [
       "ts",
