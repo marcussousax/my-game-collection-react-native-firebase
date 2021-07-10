@@ -1,20 +1,20 @@
 import * as React from 'react'
 import {
+    ActivityIndicator,
     Button,
+    FlatList,
     StyleSheet,
-    View,
     Text,
     ToastAndroid,
     TouchableOpacity,
-    FlatList,
-    ActivityIndicator
+    View
 } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { getDocRef } from '../services/api'
 import { AppStackParamList, GameProps } from '../types'
 import { StackScreenProps } from '@react-navigation/stack'
 import AppHeader from '../components/AppHeader'
-import Rating from '../components/Rating'
 import { AuthContext } from '../contexts/auth'
 
 export default function ListGameScreen({
@@ -32,10 +32,12 @@ export default function ListGameScreen({
                     | ((prevState: never[]) => never[])
                     | GameProps[] = []
                 QuerySnapshot.docs.forEach(doc => {
-                    const { title, userId, createdAt, rating } = doc.data()
+                    const { title, userId, createdAt, rating, notes, systems } =
+                        doc.data()
                     gamesSnapshot.push({
                         gameId: doc.id,
-                        notes: '',
+                        systems,
+                        notes,
                         title,
                         userId,
                         createdAt,
@@ -64,16 +66,17 @@ export default function ListGameScreen({
                     navigation.navigate('GameDetailScreen', { game: item })
                 }
             >
-                <View>
-                    <Text style={styles.cardText}>{item.title}</Text>
+                <Text style={styles.cardText}>{item.title}</Text>
+
+                <View style={styles.cardFooter}>
                     {item.rating !== 0 ? (
-                        <Rating
-                            hideTitle={true}
-                            currentGame={item}
-                            disabled={true}
-                            starSize={10}
-                            hideEmptyStar={true}
-                        />
+                        <Text style={styles.rating}>
+                            <Icon name="star" style={styles.ratingIcon} />{' '}
+                            {item.rating}
+                        </Text>
+                    ) : null}
+                    {item.notes ? (
+                        <Icon name="notes" style={styles.notes} />
                     ) : null}
                 </View>
             </TouchableOpacity>
@@ -117,12 +120,29 @@ const styles = StyleSheet.create({
         margin: 4,
         padding: 20,
         flexBasis: 0,
-        borderRadius: 5,
+        borderRadius: 2,
         borderWidth: 1,
         borderColor: '#009aa0'
     },
     cardText: {
         color: '#fff'
+    },
+    cardFooter: {
+        flexDirection: 'row',
+        width: '100%',
+        marginTop: 10,
+        justifyContent: 'space-around'
+    },
+    rating: {
+        color: '#fff'
+    },
+    ratingIcon: {
+        color: '#f1c402',
+        fontSize: 12
+    },
+    notes: {
+        color: '#fff',
+        fontSize: 20
     },
     container: {
         flex: 1,
