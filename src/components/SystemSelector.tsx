@@ -27,7 +27,6 @@ type ISystemSelector = {
 const SystemSelector = ({ currentGame, handleChange }: ISystemSelector) => {
     const [appSystems, setAppSystems] = React.useState<ISystem[]>()
     const [modalVisible, setModalVisible] = React.useState(false)
-
     React.useEffect(() => {
         const unsubscribe = getDocRef('APP-SYSTEMS').onSnapshot(
             QuerySnapshot => {
@@ -51,7 +50,6 @@ const SystemSelector = ({ currentGame, handleChange }: ISystemSelector) => {
             } else {
                 systems.push(system._id)
             }
-
             if (handleChange) {
                 handleChange('systems', systems)
             }
@@ -134,12 +132,41 @@ const SystemSelector = ({ currentGame, handleChange }: ISystemSelector) => {
 
             <Pressable onPress={() => setModalVisible(true)}>
                 <Text>System</Text>
+
                 {!currentGame?.systems?.length && (
                     <Text>There are no selected system for this title.</Text>
                 )}
-                {currentGame.systems?.map((system, index) => (
-                    <Text key={index}>{system}</Text>
-                ))}
+                <View
+                    style={{
+                        flexWrap: 'wrap',
+                        flexDirection: 'row'
+                    }}
+                >
+                    {appSystems
+                        ?.filter(x =>
+                            currentGame.systems?.includes(x._id) ? x : null
+                        )
+                        .map(y => (
+                            <View
+                                key={y._id}
+                                style={{
+                                    flexDirection: 'row',
+                                    marginVertical: 10,
+                                    alignItems: 'center',
+                                    marginRight: 30
+                                }}
+                            >
+                                <Image
+                                    style={{
+                                        width: 30,
+                                        height: 30
+                                    }}
+                                    source={{ uri: y.iconURI }}
+                                />
+                                <Text style={{ marginLeft: 5 }}>{y.name}</Text>
+                            </View>
+                        ))}
+                </View>
             </Pressable>
         </View>
     )
