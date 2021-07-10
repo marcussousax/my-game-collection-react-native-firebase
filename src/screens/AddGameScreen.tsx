@@ -46,6 +46,7 @@ const AddGameScreen = ({ navigation }: StackScreenProps<AppStackParamList>) => {
             <AppHeader title={'what are you playing?'} hideAvatar={true} />
             <ScrollView>
                 <TextInput
+                    autoFocus={true}
                     style={styles.input}
                     placeholder={'Title'}
                     onChangeText={value => handleChange('title', value)}
@@ -69,11 +70,6 @@ const styles = StyleSheet.create({
     },
     footer: {
         paddingVertical: 20
-    },
-    separator: {
-        marginVertical: 30,
-        height: 1,
-        width: '80%'
     },
     input: {
         backgroundColor: '#ddd',
