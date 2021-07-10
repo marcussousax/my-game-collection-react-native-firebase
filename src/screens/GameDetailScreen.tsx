@@ -49,7 +49,6 @@ export default function GameDetailScreen({ navigation, route }) {
 
     const updateGame = async (id: string) => {
         setSending(true)
-
         const batch = firestore().batch()
 
         const docRef = getDocRef('GAMES').doc(id)
@@ -57,7 +56,7 @@ export default function GameDetailScreen({ navigation, route }) {
             title: currentGame?.title,
             rating: currentGame?.rating,
             notes: currentGame?.notes,
-            systems: currentGame?.systems
+            systems: currentGame?.systems || []
         })
 
         await batch
